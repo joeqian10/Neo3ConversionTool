@@ -16,26 +16,26 @@ namespace Neo3ConversionTool
     public static class Helper
     {
         /// <summary>
-        /// 将十六进制的字符串转为 ASCII 字符串
+        /// 将十六进制的字符串转为 UTF8 字符串
         /// </summary>
         /// <param name="hex">eg:7472616e73666572</param>
-        /// <returns>eg:Transfer</returns>
-        public static string HexStringToAscii(string hex)
+        /// <returns>eg:transfer</returns>
+        public static string HexStringToUTF8(string hex)
         {
             hex = hex.ToLower().Trim();
             if (!new Regex("^([0-9a-f]{2})+$").IsMatch(hex)) throw new FormatException();
 
-            return Encoding.ASCII.GetString(hex.HexToBytes());
+            return Encoding.UTF8.GetString(hex.HexToBytes());
         }
 
         /// <summary>
-        /// 将 ASCII 格式的字符串转为十六进制的字符串
+        /// 将 UTF8 格式的字符串转为十六进制的字符串
         /// </summary>
-        /// <param name="str">eg:Transfer</param>
+        /// <param name="str">eg:transfer</param>
         /// <returns>eg:7472616e73666572</returns>
-        public static string AsciiToHexString(string str)
+        public static string UTF8ToHexString(string str)
         {
-            return Encoding.ASCII.GetBytes(str.Trim()).Reverse().ToArray().ToHexString();
+            return Encoding.UTF8.GetBytes(str.Trim()).ToHexString();
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Neo3ConversionTool
         }
 
         /// <summary>
-        /// Base64 格式的字符串转为 ASCII 字符串
+        /// Base64 格式的字符串转为 UTF8 字符串
         /// </summary>
         /// <param name="base64">eg:SGVsbG8gV29ybGQh</param>
         /// <returns>eg:Hello World!</returns>
@@ -151,13 +151,13 @@ namespace Neo3ConversionTool
         }
 
         /// <summary>
-        /// ASCII 字符串转为 Base64 格式的字符串
+        /// UTF8 字符串转为 Base64 格式的字符串
         /// </summary>
         /// <param name="str">eg:Hello World!</param>
         /// <returns>eg:SGVsbG8gV29ybGQh</returns>
         public static string StringToBase64String(string str)
         {
-            return Convert.ToBase64String(Encoding.ASCII.GetBytes(str.Trim()));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(str.Trim()));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Neo3ConversionTool
         /// 公钥转为 Neo3 地址
         /// </summary>
         /// <param name="base64">eg:03dab84c1243ec01ab2500e1a8c7a1546a26d734628180b0cf64e72bf776536997</param>
-        /// <returns>eg:zmFvf3Rhfg/EuAVYOvJgKiON9j8=</returns>
+        /// <returns>eg:Nd9NceysETPT9PZdWRTeQXJix68WM2x6Wv</returns>
         public static string PublicKeyToAddress(string pubKey)
         {
             if (!new Regex("^(0[23][0-9a-f]{64})+$").IsMatch(pubKey)) throw new FormatException();
@@ -194,8 +194,8 @@ namespace Neo3ConversionTool
         /// <summary>
         ///  Neo3 地址转为 Base64 格式的脚本哈希
         /// </summary>
-        /// <param name="address">eg:zmFvf3Rhfg/EuAVYOvJgKiON9j8=</param>
-        /// <returns>eg:NejD7DJWzD48ZG4gXKDVZt3QLf1fpNe1PF</returns>
+        /// <param name="address">eg:NejD7DJWzD48ZG4gXKDVZt3QLf1fpNe1PF</param>
+        /// <returns>eg:zmFvf3Rhfg/EuAVYOvJgKiON9j8=</returns>
         public static string AddressToBase64String(string address)
         {
             return Convert.ToBase64String(address.Trim().ToScriptHash().ToArray());
